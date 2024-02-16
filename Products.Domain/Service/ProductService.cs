@@ -58,12 +58,12 @@ namespace Products.Domain.Service
             return listProds;
         }
 
-        public ProductCreated InsertProduct(ProductCreate product)
+        public ProductReturn InsertProduct(ProductCreate product)
         {
             if (!ProductExists(product.cBarCode) && Util.ValidaGTIN(product.cBarCode))
             {
                 ProductEntity productEntity = new ProductEntity();
-                ProductCreated productCreated = new ProductCreated();
+                ProductReturn productCreated = new ProductReturn();
                 Product prod=new Product();
                 prod.Id = 0;
                 prod.cName = product.cName;
@@ -89,7 +89,7 @@ namespace Products.Domain.Service
             }
             else
             {
-                ProductCreated productCreated = new ProductCreated();
+                ProductReturn productCreated = new ProductReturn();
                 productCreated.Id = 0;
                 productCreated.cBarCode = product.cBarCode;
                 productCreated.Message = "Código de barras já existe";
@@ -102,7 +102,7 @@ namespace Products.Domain.Service
             return _productRepository.ProductExists(cBarCode);
         }
 
-        public ProductCreated UpdateProduct(Product product)
+        public ProductReturn UpdateProduct(Product product)
         {
             var productEntity = _productRepository.GetProductById(product.Id);
             if (product.cBarCode!=productEntity.cBarCode)
@@ -111,7 +111,7 @@ namespace Products.Domain.Service
                 {
                     if(!Util.ValidaGTIN(product.cBarCode))
                     {
-                        ProductCreated productCreated = new ProductCreated();
+                        ProductReturn productCreated = new ProductReturn();
                         productCreated.Id = 0;
                         productCreated.cBarCode = product.cBarCode;
                         productCreated.Message = "Código de barras inválido";
@@ -120,7 +120,7 @@ namespace Products.Domain.Service
                     else
                     {
                         _productRepository.UpdateProduct(_mapper.Map(product, productEntity));
-                        ProductCreated productCreated = new ProductCreated();
+                        ProductReturn productCreated = new ProductReturn();
                         productCreated.Id = product.Id;
                         productCreated.cBarCode = product.cBarCode;
                         productCreated.Message = "Produto Atualizado";
@@ -129,7 +129,7 @@ namespace Products.Domain.Service
                 }
                 else
                 {
-                    ProductCreated productCreated = new ProductCreated();
+                    ProductReturn productCreated = new ProductReturn();
                     productCreated.Id = 0;
                     productCreated.cBarCode = product.cBarCode;
                     productCreated.Message = "Código de barras já existe";
@@ -139,7 +139,7 @@ namespace Products.Domain.Service
             else
             {
                 _productRepository.UpdateProduct(_mapper.Map(product, productEntity));
-                ProductCreated productCreated = new ProductCreated();
+                ProductReturn productCreated = new ProductReturn();
                 productCreated.Id = product.Id;
                 productCreated.cBarCode = product.cBarCode;
                 productCreated.Message = "Produto Atualizado";

@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Products.API/DBProducts.db-shm
 /Products.API/DBProducts.db-wal
+/Products.API/DBProducts.db

@@ -11,7 +11,7 @@ namespace Products.Domain.Mapping
             CreateMap<ProductEntity, Product>().ReverseMap();
             CreateMap<ProductEntity, ProductCreate>().ReverseMap();
             CreateMap<ProductCreate, ProductEntity>().ReverseMap();
-            CreateMap<ProductEntity, ProductCreated>().ReverseMap();
+            CreateMap<ProductEntity, ProductReturn>().ReverseMap();
 
         }
     }

@@ -34,7 +34,6 @@ namespace Products.API.Controllers
             {
                 return BadRequest($"Erro: {ex.Message}");
             }
-
         }
 
         // GET: api/Products/5
@@ -47,7 +46,7 @@ namespace Products.API.Controllers
                 if (result != null)
                     return Ok(result);
                 else
-                    return BadRequest("ID não encontrado!");
+                    return BadRequest("Produto não encontrado!");
 
             }
             catch (Exception ex)
@@ -120,7 +119,7 @@ namespace Products.API.Controllers
         }
 
         // DELETE: api/Products/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{prodId}")]
         public ActionResult DeleteProduct(int prodId)
         {
             try

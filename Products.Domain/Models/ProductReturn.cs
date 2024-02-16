@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Products.Domain.Models
 {
-    public class ProductCreated
+    public class ProductReturn
     {
         public int Id { get; set; }
         public string cBarCode { get; set; }

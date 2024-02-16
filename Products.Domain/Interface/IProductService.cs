@@ -12,8 +12,8 @@ namespace Products.Domain.Interface
         List<Product> GetProducts();
         Product GetProductById(int prodId);
         List<Product> GetProductsByName(string Name);
-        ProductCreated InsertProduct(ProductCreate product);
-        ProductCreated UpdateProduct(Product product);
+        ProductReturn InsertProduct(ProductCreate product);
+        ProductReturn UpdateProduct(Product product);
         bool DeleteProduct(int prodId);
         bool ProductExists(string cBarCode);
     }
