@@ -25,11 +25,6 @@ namespace Products.Domain.Service
             _mapper = mapper;
         }
 
-        public bool DeleteProduct(Product product)
-        {
-            throw new NotImplementedException();
-        }
-
         public Product GetProductById(int prodId)
         {
             Product product= new Product();
@@ -41,8 +36,6 @@ namespace Products.Domain.Service
             }
             else
                 return null;
-
-
         }
 
         public List<Product> GetProducts()
@@ -109,9 +102,60 @@ namespace Products.Domain.Service
             return _productRepository.ProductExists(cBarCode);
         }
 
-        public Product UpdateProduct(Product product)
+        public ProductCreated UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            var productEntity = _productRepository.GetProductById(product.Id);
+            if (product.cBarCode!=productEntity.cBarCode)
+            {
+                if (!ProductExists(product.cBarCode)) 
+                {
+                    if(!Util.ValidaGTIN(product.cBarCode))
+                    {
+                        ProductCreated productCreated = new ProductCreated();
+                        productCreated.Id = 0;
+                        productCreated.cBarCode = product.cBarCode;
+                        productCreated.Message = "Código de barras inválido";
+                        return productCreated;
+                    }
+                    else
+                    {
+                        _productRepository.UpdateProduct(_mapper.Map(product, productEntity));
+                        ProductCreated productCreated = new ProductCreated();
+                        productCreated.Id = product.Id;
+                        productCreated.cBarCode = product.cBarCode;
+                        productCreated.Message = "Produto Atualizado";
+                        return productCreated;
+                    }
+                }
+                else
+                {
+                    ProductCreated productCreated = new ProductCreated();
+                    productCreated.Id = 0;
+                    productCreated.cBarCode = product.cBarCode;
+                    productCreated.Message = "Código de barras já existe";
+                    return productCreated;
+                }
+            }
+            else
+            {
+                _productRepository.UpdateProduct(_mapper.Map(product, productEntity));
+                ProductCreated productCreated = new ProductCreated();
+                productCreated.Id = product.Id;
+                productCreated.cBarCode = product.cBarCode;
+                productCreated.Message = "Produto Atualizado";
+                return productCreated;
+            }
+        }
+
+        public bool DeleteProduct(int prodId)
+        {
+            var productEntity = _productRepository.GetProductById(prodId);
+            if (productEntity != null)
+            {
+                return _productRepository.DeleteProduct(productEntity);
+            }
+            else
+                return false;
         }
     }
 }

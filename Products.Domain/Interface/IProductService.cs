@@ -13,8 +13,8 @@ namespace Products.Domain.Interface
         Product GetProductById(int prodId);
         List<Product> GetProductsByName(string Name);
         ProductCreated InsertProduct(ProductCreate product);
-        Product UpdateProduct(Product product);
-        bool DeleteProduct(Product product);
+        ProductCreated UpdateProduct(Product product);
+        bool DeleteProduct(int prodId);
         bool ProductExists(string cBarCode);
     }
 }
