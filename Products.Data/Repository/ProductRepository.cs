@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Products.Data.Context;
 using Products.Data.Entities;
 using Products.Data.Interface;
@@ -9,12 +8,10 @@ namespace Products.Data.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly APIContext _context;
-        private readonly IMapper _mapper;
 
-        public ProductRepository(APIContext context, IMapper mapper)
+        public ProductRepository(APIContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public List<ProductEntity> GetProducts()
