@@ -9,7 +9,6 @@ namespace Products.Data.Context
             : base(options)
         {
             Database.EnsureCreated();
-            
         }
 
         public DbSet<ProductEntity> ProductEntity { get; set; }

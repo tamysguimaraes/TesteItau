@@ -60,30 +60,41 @@ namespace Products.Domain.Service
 
         public ProductReturn InsertProduct(ProductCreate product)
         {
-            if (!ProductExists(product.cBarCode) && Util.ValidaGTIN(product.cBarCode))
+            if (Util.ValidaGTIN(product.cBarCode))
             {
-                ProductEntity productEntity = new ProductEntity();
-                ProductReturn productCreated = new ProductReturn();
-                Product prod=new Product();
-                prod.Id = 0;
-                prod.cName = product.cName;
-                prod.cCategory = product.cCategory;
-                prod.cBarCode = product.cBarCode;
-                prod.nValue = product.nValue;
-                _productRepository.InsertProduct(_mapper.Map(prod, productEntity));
-
-                if (productEntity.Id != 0)
+                if (!ProductExists(product.cBarCode))
                 {
-                    productCreated.Id = productEntity.Id;
-                    productCreated.cBarCode=productEntity.cBarCode;
-                    productCreated.Message = "Produto criado";
-                    return productCreated;
+                    ProductEntity productEntity = new ProductEntity();
+                    ProductReturn productCreated = new ProductReturn();
+                    Product prod = new Product();
+                    prod.Id = 0;
+                    prod.cName = product.cName;
+                    prod.cCategory = product.cCategory;
+                    prod.cBarCode = product.cBarCode;
+                    prod.nValue = product.nValue;
+                    _productRepository.InsertProduct(_mapper.Map(prod, productEntity));
+
+                    if (productEntity.Id != 0)
+                    {
+                        productCreated.Id = productEntity.Id;
+                        productCreated.cBarCode = productEntity.cBarCode;
+                        productCreated.Message = "Produto criado";
+                        return productCreated;
+                    }
+                    else
+                    {
+                        productCreated.Id = 0;
+                        productCreated.cBarCode = product.cBarCode;
+                        productCreated.Message = "Erro ao criar produto";
+                        return productCreated;
+                    }
                 }
                 else
                 {
+                    ProductReturn productCreated = new ProductReturn();
                     productCreated.Id = 0;
                     productCreated.cBarCode = product.cBarCode;
-                    productCreated.Message = "Erro ao criar produto";
+                    productCreated.Message = "Código de barras já existe";
                     return productCreated;
                 }
             }
@@ -92,9 +103,10 @@ namespace Products.Domain.Service
                 ProductReturn productCreated = new ProductReturn();
                 productCreated.Id = 0;
                 productCreated.cBarCode = product.cBarCode;
-                productCreated.Message = "Código de barras já existe";
+                productCreated.Message = "Código de barras inválido";
                 return productCreated;
             }
+            
         }
 
         public bool ProductExists(string cBarCode)

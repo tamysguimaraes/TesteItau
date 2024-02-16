@@ -15,9 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<APIContext>(opt =>
+bool.TryParse(builder.Configuration.GetSection("Configuracoes:BancoDeDadosInMemory").Value, out bool _bancoDeDadosInMemory);
+if (!_bancoDeDadosInMemory)
+{
+    builder.Services.AddDbContext<APIContext>(opt =>
         opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConn"))
     );
+}
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -48,3 +53,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{
+
+}
