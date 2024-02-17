@@ -16,16 +16,7 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_DeleteProduct_Success()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
-
+            PopulateProducts();
             var responseDelete = await DeleteRequest($"{METODO}/1");
             responseDelete.StatusCode.Should().Be(HttpStatusCode.OK);
         }
@@ -33,16 +24,7 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_DeleteProduct_Error()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
-
+            PopulateProducts();
             var responseDelete = await DeleteRequest($"{METODO}/10");
             responseDelete.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 

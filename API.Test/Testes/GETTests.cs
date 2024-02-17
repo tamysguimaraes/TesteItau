@@ -15,15 +15,7 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_GetAllProducts_Success()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
+            PopulateProducts();
 
             var responseGet = await GetRequest($"{METODO}/GetProducts");
 
@@ -34,7 +26,7 @@ namespace API.Test.Testes
             responseData.Should().NotBeNull();
 
             var list = JsonSerializer.Deserialize<List<Product>>(responseData);
-            
+
         }
 
         [Fact]
@@ -53,16 +45,8 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_GetProductByID_Success()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
-            
+            PopulateProducts();
+
             var responseGet = await GetRequest($"{METODO}/GetProductByID/1");
             responseGet.StatusCode.Should().Be(HttpStatusCode.OK);
 
@@ -74,17 +58,9 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_GetProductByName_Success()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
+            PopulateProducts();
 
-            var responseGet = await GetRequest($"{METODO}/GetProductByName/Chester");
+            var responseGet = await GetRequest($"{METODO}/GetProductByName/Ragnarok");
             responseGet.StatusCode.Should().Be(HttpStatusCode.OK);
 
             await using var responseBody = await responseGet.Content.ReadAsStreamAsync();
@@ -95,15 +71,7 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_GetProductByID_Error()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
+            PopulateProducts();
 
             var responseGet = await GetRequest($"{METODO}/GetProductByID/10");
             responseGet.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -117,15 +85,7 @@ namespace API.Test.Testes
         [Fact]
         public async void Validate_GetProductByName_Error()
         {
-            var request = new ProductRequest
-            {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
-            };
-            var responsePost = await PostRequest(METODO, request);
-            responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
+            PopulateProducts();
 
             var responseGet = await GetRequest($"{METODO}/GetProductByName/Chocolate");
             responseGet.StatusCode.Should().Be(HttpStatusCode.BadRequest);

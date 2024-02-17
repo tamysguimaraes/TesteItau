@@ -44,10 +44,10 @@ namespace API.Test.Testes
         {
             var request = new ProductRequest
             {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
+                cBarCode = "711719547266",
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
             var responsePost = await PostRequest(METODO, request);
             responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -56,9 +56,9 @@ namespace API.Test.Testes
             {
                 Id =1,
                 cBarCode = "123456",
-                cName = "Chester",
-                cCategory = "Frios",
-                nValue = 5.75m
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS5",
+                nValue = 300.00m
             };
             var responsePut = await PutRequest(METODO, request);
 
@@ -75,20 +75,20 @@ namespace API.Test.Testes
         {
             var request = new ProductRequest
             {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
+                cBarCode = "711719547266",
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
             var responsePost = await PostRequest(METODO, request);
             responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
 
             request = new ProductRequest
             {
-                cBarCode = "7891515256517",
-                cName = "Chester",
-                cCategory = "Frios",
-                nValue = 5.75m
+                cBarCode = "711719506058",
+                cName = "Death Stranding",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
 
             responsePost = await PostRequest(METODO, request);
@@ -96,10 +96,10 @@ namespace API.Test.Testes
 
             request = new ProductRequest
             {
-                cBarCode = "11201482633014",
-                cName = "Peito de Chester",
-                cCategory = "Frios",
-                nValue = 5.75m
+                cBarCode = "711719526377",
+                cName = "Last Of Us",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
 
             responsePost = await PostRequest(METODO, request);
@@ -108,9 +108,9 @@ namespace API.Test.Testes
             request = new ProductRequestUpdate
             {
                 Id = 2,
-                cBarCode = "11201482633014",
-                cName = "Chester",
-                cCategory = "Frios",
+                cBarCode = "711719526377",
+                cName = "Death Stranding",
+                cCategory = "Jogo PS5",
                 nValue = 5.75m
             };
             var responsePut = await PutRequest(METODO, request);

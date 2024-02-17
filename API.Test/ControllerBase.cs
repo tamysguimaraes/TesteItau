@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using API.Test.Requests;
+using FluentAssertions;
+using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 using Xunit;
@@ -35,6 +38,38 @@ namespace API.Test
         protected async Task<HttpResponseMessage> DeleteRequest(string metodo)
         {
             return await _client.DeleteAsync(metodo);
+        }
+
+        protected async void PopulateProducts()
+        {
+            List<ProductRequest> listProducts = new List<ProductRequest>();
+            listProducts.Add(new ProductRequest
+            {
+                cBarCode = "711719547266",
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
+            });
+            listProducts.Add(new ProductRequest
+            {
+                cBarCode = "711719506058",
+                cName = "Death Stranding",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
+            });
+            listProducts.Add(new ProductRequest
+            {
+                cBarCode = "711719526377",
+                cName = "Last Of Us",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
+            });
+            foreach (var request in listProducts)
+            {
+                var responsePost = await PostRequest("/api/Products", request);
+                responsePost.StatusCode.Should().Be(HttpStatusCode.OK);
+            }
+            
         }
     }
 }

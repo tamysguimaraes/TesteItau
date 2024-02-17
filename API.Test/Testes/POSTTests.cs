@@ -17,10 +17,10 @@ namespace API.Test.Testes
         {
             var request = new ProductRequest
             {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
+                cBarCode = "711719547266",
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
             var response = await PostRequest(METODO, request);
 
@@ -37,17 +37,17 @@ namespace API.Test.Testes
             var request = new ProductRequest
             {
                 cBarCode = "12345678",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
             var response = await PostRequest(METODO, request);
-
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
             var responseBody = await response.Content.ReadAsStringAsync();
 
             responseBody.Length.Should().BeGreaterThan(0);
+            responseBody.Should().Contain("Código de barras inválido");
         }
 
         [Fact]
@@ -55,12 +55,21 @@ namespace API.Test.Testes
         {
             var request = new ProductRequest
             {
-                cBarCode = "78937680",
-                cName = "Chesterfield",
-                cCategory = "Cigarro",
-                nValue = 5.75m
+                cBarCode = "711719547266",
+                cName = "GOW Ragnarok",
+                cCategory = "Jogo PS4",
+                nValue = 299.90m
             };
             var response = await PostRequest(METODO, request);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            request = new ProductRequest
+            {
+                cBarCode = "711719547266",
+                cName = "GOW 3",
+                cCategory = "Jogo PS4",
+                nValue = 100.90m
+            };
 
             response = await PostRequest(METODO, request);
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
