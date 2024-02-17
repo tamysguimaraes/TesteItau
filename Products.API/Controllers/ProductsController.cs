@@ -17,8 +17,8 @@ namespace Products.API.Controllers
             _productService = productService;
         }
 
-        /// GET: api/Products
-        [HttpGet]
+        /// GET: api/Products/GetProducts
+        [HttpGet("GetProducts")]
         public ActionResult GetProducts()
         {
             try
@@ -37,12 +37,12 @@ namespace Products.API.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("GetProductByID")]
-        public ActionResult GetProductById(int id)
+        [HttpGet("GetProductByID/{prodId}")]
+        public ActionResult GetProductById(int prodId)
         {
             try
             {
-                var result = _productService.GetProductById(id);
+                var result = _productService.GetProductById(prodId);
                 if (result != null)
                     return Ok(result);
                 else
@@ -55,8 +55,8 @@ namespace Products.API.Controllers
             }
         }
 
-        // api/Products/Name/{cName}
-        [HttpGet("GetProductByName")]
+        // api/Products/GetProductByName/{cName}
+        [HttpGet("GetProductByName/{cName}")]
         public ActionResult<List<Product>> GetProductsByName(string cName)
         {
             try
@@ -127,7 +127,7 @@ namespace Products.API.Controllers
                 if (_productService.DeleteProduct(prodId))
                     return Ok("Produto deletado");
                 else
-                    return BadRequest("ID não encontrado!");
+                    return BadRequest("Produto não encontrado!");
 
             }
             catch (Exception ex)
